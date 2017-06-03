@@ -32,6 +32,12 @@
         android:id="@+id/btn5_activityMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="合并最近的N个节点\n ( 比如说：当三个数同时满足)" />
+        android:text="合并最近的N个节点\n ( 比如说 注册：需要三个参数数同时满足)" />
+
+    <Button
+        android:id="@+id/btn6_activityMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="合并最近的N个节点\n ( 比如说 注册：需要三个参数数同时满足)" />
 
 </LinearLayout>

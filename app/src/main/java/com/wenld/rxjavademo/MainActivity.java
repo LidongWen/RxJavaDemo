@@ -2,21 +2,18 @@ package com.wenld.rxjavademo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
-
-import org.reactivestreams.Subscriber;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static android.text.TextUtils.isEmpty;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn, btn2, btn3;
 
     String str = null;
-
+        Observable<Long> intervalObservable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,9 +72,68 @@ public class MainActivity extends AppCompatActivity {
                         .subscribe(observer));
 
 
-        findViewById(R.id.btn4_activityMain).setOnClickListener(v ->
-                Observable.interval(2, TimeUnit.SECONDS)
-                        .subscribe(longObserver)
+        findViewById(R.id.btn4_activityMain).setOnClickListener(v ->{
+            if(intervalObservable ==null) {
+                intervalObservable = Observable.interval(2, TimeUnit.SECONDS);
+                intervalObservable.subscribe(longObserver);
+            }
+//                //取消订阅
+//            intervalObservable.one();
+                }
+        );
+        findViewById(R.id.btn5_activityMain).setOnClickListener(v ->
+                {
+                    Observable<CharSequence> _emailChangeObservable = Observable.just("111", "222");
+                    Observable<CharSequence> _passwordChangeObservable = Observable.just("222");
+                    Observable<CharSequence> _numberChangeObservable = Observable.just("333");
+                    Observable.combineLatest(_emailChangeObservable,
+                            _passwordChangeObservable,
+                            _numberChangeObservable,
+                            (s, charSequence, charSequence2) -> {
+                                boolean emailValid = !isEmpty(s);
+                                boolean passValid = !isEmpty(charSequence) && charSequence.length() > 8;
+                                boolean numValid = !isEmpty(charSequence2);
+                                if (numValid) {
+                                    int num = Integer.parseInt(charSequence2.toString());
+                                    numValid = num > 0 && num <= 100;
+                                }
+                                return emailValid && passValid && numValid;
+                            })
+                            .subscribe(new Observer<Boolean>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+                                    out("onSubscribe");
+                                }
+
+                                @Override
+                                public void onNext(Boolean b) {
+                                    out("onNext：" + (b ? "成功" : "失败"));
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    out("onError：" + e.getMessage());
+                                }
+
+                                @Override
+                                public void onComplete() {
+                                    out("onComplete 结束：");
+                                }
+                            });
+                }
+        );
+        findViewById(R.id.btn6_activityMain).setOnClickListener(v ->
+
+                        Observable.just(1, 2, 3, 4, 5, 6, 7, 8, 9)
+                                .filter(integer -> {
+                                    if (integer <3) {
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                })
+                                .firstElement()
+                                .subscribe(integer -> out("accept：" + integer))
         );
     }
 
@@ -144,6 +200,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onNext(Long l) {
             out("onNext：" + l);
+            if(l>5){
+                onError(new Throwable());
+            }
         }
 
         @Override
