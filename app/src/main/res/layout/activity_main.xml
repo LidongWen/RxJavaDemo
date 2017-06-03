@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wenld.rxjavademo.MainActivity">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btn_activityMain"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/tv"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="处理一个异步流程\n 网络请求、数据库操作、文件读写，UI展示" />
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/btn2_activityMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="延迟执行,（发射一个数据 0）" />
+
+    <Button
+        android:id="@+id/btn3_activityMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="两个被观察者合并数据  执行同一个观察者" />
+
+    <Button
+        android:id="@+id/btn4_activityMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="定时任务" />
+
+    <Button
+        android:id="@+id/btn5_activityMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="合并最近的N个节点\n ( 比如说：当三个数同时满足)" />
+
+</LinearLayout>

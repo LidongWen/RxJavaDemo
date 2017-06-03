@@ -21,7 +21,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class TwoActivity extends AppCompatActivity {
-    String TAG = "MainActivity";
+    String TAG = "TwoActivity";
     List<String> list = new ArrayList<>();
     private TextView tv;
 
@@ -217,6 +217,5 @@ public class TwoActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        tv = (TextView) findViewById(R.id.tv);
     }
 }
